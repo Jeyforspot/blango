@@ -6,6 +6,7 @@
   {% row %}
     <div class="col">
       {% include "blog/post-byline.html" %}
+      {% include "blog/post-comments.html" %}
     </div>
   {% endrow %}
   {% row %}
@@ -16,7 +17,6 @@
 
 {% row %}
   {% col %}
-    <h5>Hello</h5>
     {% recent_posts post %}
   {% endcol %}
 {% endrow %}

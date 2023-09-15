@@ -128,7 +128,6 @@ class Dev(Configuration):
             },
         },
     ]
-
     WSGI_APPLICATION = 'blango.wsgi.application'
 
 

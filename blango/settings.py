@@ -15,7 +15,7 @@ import os
 from configurations import Configuration
 from configurations import values
 import dj_database_url
-
+from debug_toolbar.panels.logging import collector
 
 class Dev(Configuration):
     LOGGING = {
@@ -30,19 +30,24 @@ class Dev(Configuration):
       "verbose":{
         "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
         "style": "{"
-      }
+      },
     },
     "handlers": {
-        "console": {
-          "class": "logging.StreamHandler",
-          "stream": "ext://sys.stdout",
-          "formatter": "verbose"
-        },
-        "mail_admin": {
-          "level": "ERROR",
-          "class": "django.utils.log.AdminEmailHandler",
-          "filters": ["require_debug_false"],
-        },
+      "console": {
+        "class": "logging.StreamHandler",
+        "stream": "ext://sys.stdout",
+        "formatter": "verbose"
+      },
+      "mail_admin": {
+        "level": "ERROR",
+        "class": "django.utils.log.AdminEmailHandler",
+        "filters": ["require_debug_false"],
+      },
+      "djdt_log": {
+        "level": "DEBUG",
+        "class": "debug_toolbar.panels.logging.ThreadTrackingHandler",
+        "collector": collector,
+      },
     },
     "logger": {
       "django.request": {
@@ -52,7 +57,7 @@ class Dev(Configuration):
       },
     },
     "root": {
-        "handlers": ["console"],
+        "handlers": ["djdt_log"],
         "level": "DEBUG",
     }
 }
@@ -80,6 +85,7 @@ class Dev(Configuration):
     
     CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
     CRISPY_TEMPLATE_PACK = 'bootstrap5'
+    INTERNAL_IPS = ['192.168.10.93']
     
     # Application definition
     INSTALLED_APPS = [
@@ -91,10 +97,12 @@ class Dev(Configuration):
         'django.contrib.staticfiles',
         'blog',
         'crispy_forms',
-        'crispy_bootstrap5'
+        'crispy_bootstrap5',
+        'debug_toolbar',
         ]
         
     MIDDLEWARE = [
+            'debug_toolbar.middleware.DebugToolbarMiddleware',
             'django.middleware.security.SecurityMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.common.CommonMiddleware',

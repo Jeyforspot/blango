@@ -18,6 +18,9 @@ import dj_database_url
 from debug_toolbar.panels.logging import collector
 
 class Dev(Configuration):
+    # REGISTRATION_OPEN = False
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    ACCOUNT_ACTIVATION_DAYS = 7
     LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

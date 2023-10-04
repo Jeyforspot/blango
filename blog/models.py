@@ -23,11 +23,11 @@ class Comment(models.Model):
 
 class Post(models.Model):
   author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-  create_at = models.DateTimeField(auto_now_add=True, db_index=True)
+  created_at = models.DateTimeField(auto_now_add=True, db_index=True)
   modified_at = models.DateTimeField(auto_now=True)
   published_at = models.DateTimeField(blank=True, null=True, db_index=True)
   title = models.TextField(max_length=100)
-  slug = models.SlugField()
+  slug = models.SlugField(unique=True)
   summary = models.TextField(max_length=500)
   content = models.TextField()
   tags = models.ManyToManyField(Tag, related_name="posts")

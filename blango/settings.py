@@ -18,6 +18,15 @@ import dj_database_url
 from debug_toolbar.panels.logging import collector
 
 class Dev(Configuration):
+
+    REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
     # REGISTRATION_OPEN = False
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     ACCOUNT_ACTIVATION_DAYS = 7
@@ -109,6 +118,7 @@ class Dev(Configuration):
         'allauth.socialaccount',
         'allauth.socialaccount.providers.google',
         'rest_framework',
+        'rest_framework.authtoken',
         ]
     SITE_ID = 1
     ACCOUNT_USER_USERNAME_FIELD = None

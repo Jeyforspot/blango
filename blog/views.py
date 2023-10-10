@@ -7,7 +7,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 def index(request):
-  posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+  # posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+  posts = Post.objects.all().select_related("author")
   logger.debug("Got %d posts", len(posts))
   context = {
     "posts": posts

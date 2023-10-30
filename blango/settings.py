@@ -28,6 +28,12 @@ class Dev(Configuration):
       "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
+      "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+      "PAGE_SIZE": 4,
+      "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.OrderingFilter"
+      ],
 }
 
     # REGISTRATION_OPEN = False
@@ -123,6 +129,7 @@ class Dev(Configuration):
         'rest_framework',
         'rest_framework.authtoken',
         'drf_yasg',
+        "django_filters",
         ]
     SITE_ID = 1
     ACCOUNT_USER_USERNAME_FIELD = None
